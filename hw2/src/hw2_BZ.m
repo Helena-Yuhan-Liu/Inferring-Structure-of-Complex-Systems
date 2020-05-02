@@ -167,14 +167,4 @@ subplot(2,1,2), plot(v(:,1:3),'Linewidth',[2])
 % only one sing val with relative energy above 0.05, 
 % latent variables probably have very little effect 
 
-% AIC, BIC
-% Doesn't capture the striking improvement with TD
-% possibly due to the caveat with not considering timing 
-[mu,sig] = normfit(real(u_dmd));
-logL=sum(log(normpdf(X,mu,sig))); 
-[aic, bic] = aicbic(logL, l, l); 
-
-[mutd,sigtd] = normfit(real(u_dmd_td(1,:)));
-logL=sum(log(normpdf(X,mutd,sigtd))); 
-[aictd, bictd] = aicbic(logL, l, l); 
 

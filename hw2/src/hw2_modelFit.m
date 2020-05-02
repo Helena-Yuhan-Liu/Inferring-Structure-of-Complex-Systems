@@ -142,29 +142,19 @@ KL_L(3) = get_KL(edges, X(2,:), y_sin(:,2));
 
 % First, compute AIC BIC for the Hare population 
 
-% Get the underlying normal distribution
-[mu1H,sig1H] = normfit(y_lv(:,1));
-[mu2H,sig2H] = normfit(y_poly(:,1));
-[mu3H,sig3H] = normfit(y_sin(:,1));
-
 logL = zeros(3,1); % Preallocate loglikelihood vector
-logL(1)=sum(log(normpdf(X(1,:),mu1H,sig1H)));
-logL(2)=sum(log(normpdf(X(1,:),mu2H,sig2H)));
-logL(3)=sum(log(normpdf(X(1,:),mu3H,sig3H)));
+logL(1)=n/2*(-log(2*pi)-log(var(X(1,:)'-y_lv(:,1)))-1); 
+logL(2)=n/2*(-log(2*pi)-log(var(X(1,:)'-y_poly(:,1)))-1); 
+logL(3)=n/2*(-log(2*pi)-log(var(X(1,:)'-y_sin(:,1)))-1); 
 numParam = [4; nnz(xi1)+nnz(yi1); nnz(xi2)+nnz(yi2)]; % Number of param
 [aicH, bicH] = aicbic(logL, numParam, n*ones(3,1)); 
 
 % Repeat for the Hare population 
 
-% Get the underlying normal distribution
-[mu1L,sig1L] = normfit(y_lv(:,2));
-[mu2L,sig2L] = normfit(y_poly(:,2));
-[mu3L,sig3L] = normfit(y_sin(:,2));
-
 logL = zeros(3,1); % Preallocate loglikelihood vector
-logL(1)=sum(log(normpdf(X(2,:),mu1L,sig1L)));
-logL(2)=sum(log(normpdf(X(2,:),mu2L,sig2L)));
-logL(3)=sum(log(normpdf(X(2,:),mu3L,sig3L)));
+logL(1)=n/2*(-log(2*pi)-log(var(X(2,:)'-y_lv(:,2)))-1); 
+logL(2)=n/2*(-log(2*pi)-log(var(X(2,:)'-y_poly(:,2)))-1); 
+logL(3)=n/2*(-log(2*pi)-log(var(X(2,:)'-y_sin(:,2)))-1);
 numParam = [4; nnz(xi1)+nnz(yi1); nnz(xi2)+nnz(yi2)]; 
 [aicL, bicL] = aicbic(logL, numParam, n*ones(3,1)); 
 

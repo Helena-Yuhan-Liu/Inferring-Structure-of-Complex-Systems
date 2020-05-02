@@ -207,26 +207,24 @@ KL_L = get_KL(edges, X(2,:), real(u_dmd(:,2)));
 KL_L_td = get_KL(edges, X(2,:), real(u_dmd_td(:,2))); 
 
 % AIC BIC for without time-delay embedding
+n=length(t);
 
 % First, compute AIC BIC for the Hare population 
-[muH,sigH] = normfit(real(u_dmd(:,1)));
-logL=sum(log(normpdf(X(1,:),muH,sigH))); 
+logL=n/2*(-log(2*pi)-log(var(X(1,:)-real(u_dmd(1,:))))-1);
 [aicH, bicH] = aicbic(logL, length(t), length(t)); 
 
 % Then, compute AIC BIC for the Lynx population 
-[muL,sigL] = normfit(real(u_dmd(:,2)));
-logL=sum(log(normpdf(X(2,:),muL,sigL))); 
-[aicL, bicL] = aicbic(logL, length(t), length(t)); 
+logL=n/2*(-log(2*pi)-log(var(X(2,:)-real(u_dmd(2,:))))-1);
+[aicL, bicL] = aicbic(logL, length(t), length(t));
 
 % AIC BIC for time delayed embedding 
 
 % First, compute AIC BIC for the Hare population 
-[muH,sigH] = normfit(real(u_dmd_td(:,1)));
-logL=sum(log(normpdf(X(1,:),muH,sigH))); 
+logL=n/2*(-log(2*pi)-log(var(X(1,:)-real(u_dmd_td(1,:))))-1);
 [aicHtd, bicHtd] = aicbic(logL, length(t), length(t)); 
 
 % Then, compute AIC BIC for the Lynx population 
-[muL,sigL] = normfit(real(u_dmd_td(:,2)));
-logL=sum(log(normpdf(X(2,:),muL,sigL))); 
+logL=n/2*(-log(2*pi)-log(var(X(2,:)-real(u_dmd_td(2,:))))-1);
 [aicLtd, bicLtd] = aicbic(logL, length(t), length(t)); 
+
 
